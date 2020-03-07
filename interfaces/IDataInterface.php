@@ -6,7 +6,7 @@
  * @date 07.03.2020
  */
 
-interface IDataInterface
+interface IDataCollector
 {
     /**
      * @brief Fetches data from an external survey tool given a token.

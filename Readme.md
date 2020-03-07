@@ -29,4 +29,32 @@ OUT: token <-->
 
 - PHP 7.2
 - Composer ([Introduction](https://getcomposer.org/doc/00-intro.md))
+- libmergepdf
 - VS Code with phpfmt, PHP IntelliSense
+
+
+## Survey tools
+
+Open Source tools:
+- LimeSurvey
+
+More open tools:
+- LamaPoll
+
+Plain commercial APIs:
+- [SurveyMonkey API](https://developer.surveymonkey.com/api/v3/#collectors-id-responses-id-details)
+- [SurveyHero API](https://developer.surveyhero.com/api/#get-all-answers-from-response)
+- [Qualtrics API](https://api.qualtrics.com/reference#getresponse-1)
+
+None of them offering a student plan & only premium plan has API access
+
+## LimeSurvey implementation
+
+Approach: 
+- Self-hosted installation of LimeSurvey **on the same server**.
+- The survey must enforce a participant list with access tokens.
+- This enforces URLs like `<SurveyUrl>/index.php?r=survey/index&sid=<SurveyId>&token=<tokenId>`.
+- The token will be stored alongside with the results of the participant.
+- The last page of LimeSurvey needs to implement a link to this survey-evaluator with the parameter `?token={TOKEN}`. 
+- This leverages the LimeSurvey ExpressionManager syntax.
+- The implementation of the `IDataCollector` uses direct access to the database to fetch the results of the participant by his token.

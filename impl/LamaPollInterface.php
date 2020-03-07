@@ -5,10 +5,10 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-require_once __DIR__ . "/../interfaces/IDataInterface.php";
+require_once __DIR__ . "/../interfaces/IDataCollector.php";
 require_once __DIR__ . "/schema/Validation.php";
 
-class LamaPollInterface implements IDataInterface
+class LamaPollInterface implements IDataCollector
 {
     public function FetchData($token)
     {
