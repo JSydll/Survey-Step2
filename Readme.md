@@ -25,7 +25,8 @@ OUT: token <-->
                     MailService (send result file)
                     IN: file name, email
 
-## Technology
+## Technologies & Tools
 
 - PHP 7.2
-- Written in VS Code with phpfmt, PHP IntelliSense
+- Composer ([Introduction](https://getcomposer.org/doc/00-intro.md))
+- VS Code with phpfmt, PHP IntelliSense
