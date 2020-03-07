@@ -6,15 +6,13 @@
  * @date 07.03.2020
  */
 
-interface IResultGenerator 
+interface IResultGenerator
 {
     /**
      * @brief Generates a custom tailored result file.
-     * 
+     *
      * @param evaluatedData Used to determine how to generate the result.
      * @return fileName Name of the generated result file
      */
-    public function GenerateFile($evaluatedData) : string;
+    public function GenerateFile($evaluatedData): string;
 }
-
-?>

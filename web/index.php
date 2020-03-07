@@ -1,14 +1,14 @@
 
-<?php 
+<?php
 // During development: Display all errors.
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once("impl/LamaPollInterface.php");
-require_once("impl/CharacteristicsAnalyzer.php");
-require_once("impl/RecommendationFileGenerator.php");
-require_once("SurveyEvaluator.php");
+require_once __DIR__ . "/impl/LamaPollInterface.php";
+require_once __DIR__ . "/impl/CharacteristicsAnalyzer.php";
+require_once __DIR__ . "/impl/RecommendationFileGenerator.php";
+require_once __DIR__ . "/SurveyEvaluator.php";
 
 $data = new LamaPollInterface();
 $proc = new CharacteristicsAnalyzer();

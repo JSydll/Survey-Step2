@@ -24,3 +24,8 @@ OUT: token <-->
                 IN: file name OUT: file name, email <-->
                     MailService (send result file)
                     IN: file name, email
+
+## Technology
+
+- PHP 7.2
+- Written in VS Code with phpfmt, PHP IntelliSense
