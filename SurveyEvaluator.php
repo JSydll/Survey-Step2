@@ -9,6 +9,8 @@ require_once __DIR__ . "/interfaces/IDataCollector.php";
 require_once __DIR__ . "/interfaces/IProcessor.php";
 require_once __DIR__ . "/interfaces/IResultGenerator.php";
 
+require_once __DIR__ . "/utility/ServerVariables.php";
+
 class SurveyEvaluator
 {
     // Private data members
@@ -30,9 +32,13 @@ class SurveyEvaluator
         $this->processor = $proc;
         $this->generator = $gen;
 
-        $token = $this->GetTokenFromUrl();
-        echo "Got token '" . $token . "'.<br>";
-        $rawData = $this->data->FetchData($token);
+        $token = GetVar("token");
+        $surveyId = GetVar("sid");
+        if (empty($token) or empty($surveyId)) {
+            echo "<b>Token or surveyId not set! </b><br>";
+            return;
+        }
+        $rawData = $this->data->FetchData(intval($surveyId), $token);
         $evaluatedData = $this->processor->Process($rawData);
         $this->resultFile = $this->generator->GenerateFile($evaluatedData);
         echo "Got result file '" . $this->resultFile . "'.<br>";
@@ -47,5 +53,10 @@ class SurveyEvaluator
     private function GetTokenFromUrl()
     {
         return "some-token";
+    }
+
+    private function GetSurveyIdFromUrl()
+    {
+
     }
 }

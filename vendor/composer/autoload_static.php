@@ -28,6 +28,16 @@ class ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'o' => 
+        array (
+            'org\\jsonrpcphp\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/weberhofer/jsonrpcphp/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'FPDF' => __DIR__ . '/..' . '/iio/libmergepdf/tcpdi/tcpdi.php',
@@ -54,6 +64,7 @@ class ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548::$classMap;
 
         }, null, ClassLoader::class);

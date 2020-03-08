@@ -1,5 +1,6 @@
 {
     "require": {
-        "iio/libmergepdf": "^4.0"
+        "iio/libmergepdf": "^4.0",
+        "weberhofer/jsonrpcphp": "^2.2"
     }
 }

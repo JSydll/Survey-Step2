@@ -5,12 +5,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . "/impl/LamaPollInterface.php";
+require_once __DIR__ . "/impl/LimeSurveyCollector.php";
 require_once __DIR__ . "/impl/CharacteristicsAnalyzer.php";
 require_once __DIR__ . "/impl/RecommendationFileGenerator.php";
 require_once __DIR__ . "/SurveyEvaluator.php";
 
-$data = new LamaPollInterface();
+$data = new LimeSurveyCollector("http://localhost/limesurvey/index.php?r=", "admin", "admin");
 $proc = new CharacteristicsAnalyzer();
 $gen = new RecommendationFileGenerator();
 $evaluator = new SurveyEvaluator($data, $proc, $gen);
