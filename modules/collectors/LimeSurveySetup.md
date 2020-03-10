@@ -39,7 +39,7 @@ sudo apt install emma
 
 # Insights on the inner workings of LimeSurvey's database
 
-If using the API for accessing survey data does not work, direct access to LimeSurvey's database could be an alternative approach. This of course only works for a self-hosted installation of LimeSurvey on the same host where the SurveyEvaluator runs on.
+If using the API for accessing survey data does not work, direct access to LimeSurvey's database could be an alternative approach. This of course only works for a self-hosted installation of LimeSurvey on the same host where the DataFlow runs on.
 
 Insights:
 - Question codes and infos are stored in tables following the convention `$prefix."_questions"`

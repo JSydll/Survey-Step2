@@ -5,15 +5,16 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . "/impl/LimeSurveyCollector.php";
-require_once __DIR__ . "/impl/CharacteristicsAnalyzer.php";
-require_once __DIR__ . "/impl/RecommendationFileGenerator.php";
-require_once __DIR__ . "/SurveyEvaluator.php";
+$ROOT = __DIR__;
+require_once "$ROOT/modules/collectors/LimeSurveyCollector.php";
+require_once "$ROOT/modules/processors/ScriptedProcessor.php";
+require_once "$ROOT/modules/result-generators/FileGenerator.php";
+require_once "$ROOT/DataFlow.php";
 
 $data = new LimeSurveyCollector("http://localhost/limesurvey/index.php?r=", "admin", "admin");
-$proc = new CharacteristicsAnalyzer();
-$gen = new RecommendationFileGenerator();
-$evaluator = new SurveyEvaluator($data, $proc, $gen);
+$proc = new ScriptedProcessor("$ROOT/schema/raw.ini");
+$gen = new FileGenerator("$ROOT/schema/evaluated.ini", "$ROOT/content/pdf");
+$evaluator = new DataFlow($data, $proc, $gen);
 
 ?>
 <!DOCTYPE html>

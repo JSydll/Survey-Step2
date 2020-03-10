@@ -5,11 +5,20 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-require_once __DIR__ . "/../vendor/autoload.php";
+$ROOT = __DIR__ . "/..";
+require_once "$ROOT/vendor/autoload.php";
 use iio\libmergepdf\Merger;
 
 class PdfMerger
 {
+    // Private members
+    private $contentPath;
+
+    public function __construct($contentPath)
+    {
+        $this->contentPath = $contentPath;
+    }
+
     /**
      * @brief Merges several PDF files into one.
      *
@@ -20,7 +29,7 @@ class PdfMerger
     {
         $merger = new Merger;
         foreach ($fileNames as $file) {
-            $path = __DIR__ . "/input/$file";
+            $path = "$this->contentPath/$file";
             if (!file_exists($path) || !is_readable($path)) {
                 echo "Could access file '$file'! Skipping...<br>";
                 continue;

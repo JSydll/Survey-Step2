@@ -57,3 +57,9 @@ Approach:
 - The token will be stored alongside with the results of the participant.
 - The last page of LimeSurvey needs to implement a link to this survey-evaluator with the parameter `?sid={SID]&token={TOKEN}`. This leverages the LimeSurvey ExpressionManager syntax.
 - The implementation of the `IDataCollector` uses the [LimeSurvey RemoteControl API 2](https://manual.limesurvey.org/RemoteControl_2_API) to fetch the results of the participant by his token.
+
+
+## Todos
+
+- Logging
+- Scripting of data processing & file generation

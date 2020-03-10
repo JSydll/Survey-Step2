@@ -5,13 +5,14 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-require_once __DIR__ . "/interfaces/IDataCollector.php";
-require_once __DIR__ . "/interfaces/IProcessor.php";
-require_once __DIR__ . "/interfaces/IResultGenerator.php";
+$ROOT = __DIR__;
+require_once "$ROOT/interfaces/IDataCollector.php";
+require_once "$ROOT/interfaces/IProcessor.php";
+require_once "$ROOT/interfaces/IResultGenerator.php";
 
-require_once __DIR__ . "/utility/ServerVariables.php";
+require_once "$ROOT/utility/ServerVariables.php";
 
-class SurveyEvaluator
+class DataFlow
 {
     // Private data members
     private $data;

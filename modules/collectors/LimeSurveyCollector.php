@@ -5,10 +5,11 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-require_once __DIR__ . "/../interfaces/IDataCollector.php";
-require_once __DIR__ . "/schema/Validation.php";
+$ROOT = __DIR__ . "/../..";
+require_once "$ROOT/interfaces/IDataCollector.php";
+require_once "$ROOT/schema/Validation.php";
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require_once "$ROOT/vendor/autoload.php";
 
 class LimeSurveyCollector implements IDataCollector
 {
