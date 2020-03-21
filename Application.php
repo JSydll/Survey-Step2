@@ -12,10 +12,10 @@ require_once "$ROOT/interfaces/IResultGenerator.php";
 
 require_once "$ROOT/utility/ServerVariables.php";
 
-class DataFlow
+class Application
 {
     // Private data members
-    private $data;
+    private $collector;
     private $processor;
     private $generator;
 
@@ -23,13 +23,13 @@ class DataFlow
 
     /**
      * @brief Constructor with dependency injection for the concrete implementations
-     * @param data The interface to the external survey tool.
+     * @param collector The interface to the external survey tool.
      * @param proc Processor of raw data to turn it into something meaningful for the ResultGenerator.
      * @param gen ResultGenerator
      */
-    public function __construct(IDataCollector $data, IProcessor $proc, IResultGenerator $gen)
+    public function __construct(IDataCollector $collector, IProcessor $proc, IResultGenerator $gen)
     {
-        $this->data = $data;
+        $this->collector = $collector;
         $this->processor = $proc;
         $this->generator = $gen;
 
@@ -39,25 +39,14 @@ class DataFlow
             echo "<b>Token or surveyId not set! </b><br>";
             return;
         }
-        $rawData = $this->data->FetchData(intval($surveyId), $token);
+        $rawData = $this->collector->FetchData(intval($surveyId), $token);
         $evaluatedData = $this->processor->Process($rawData);
         $this->resultFile = $this->generator->GenerateFile($evaluatedData);
         echo "Got result file '" . $this->resultFile . "'.<br>";
     }
 
-    public function GetHtml()
+    public function GetResultFile()
     {
-        $html = "<div>RESULTS WILL BE HERE!</div>";
-        return $html;
-    }
-
-    private function GetTokenFromUrl()
-    {
-        return "some-token";
-    }
-
-    private function GetSurveyIdFromUrl()
-    {
-
+        return $this->resultFile;
     }
 }
