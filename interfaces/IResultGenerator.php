@@ -9,10 +9,12 @@
 interface IResultGenerator
 {
     /**
-     * @brief Generates a custom tailored result file.
+     * @brief Generates a custom tailored result.
      *
+     * @note Throws an exception if the reuslt cannot be generated.
+     * 
      * @param evaluatedData Used to determine how to generate the result.
-     * @return fileName Name of the generated result file
+     * @return result Actual result data (differs on used implementation) 
      */
-    public function GenerateFile($evaluatedData): string;
+    public function Generate($evaluatedData);
 }

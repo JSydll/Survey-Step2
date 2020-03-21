@@ -11,9 +11,12 @@ interface IDataCollector
     /**
      * @brief Fetches data from an external survey tool given a token.
      *
+     * @note Throws an exception if something fails in the process of
+     * acquiring the data.
+     *
      * @param surveyId Id of the survey.
      * @param token Access token used to connect to the external tool.
      * @return rawData Map of the data for all fields in the survey.
      */
-    public function FetchData($surveyId, $token);
+    public function Fetch($surveyId, $token);
 }

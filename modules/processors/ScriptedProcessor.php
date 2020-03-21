@@ -9,25 +9,33 @@ $ROOT = __DIR__ . "/../..";
 require_once "$ROOT/interfaces/IProcessor.php";
 require_once "$ROOT/schema/Validation.php";
 
+require_once "$ROOT/HttpException.php";
+
 class ScriptedProcessor implements IProcessor
 {
     // Private members
     private $schema;
 
+    /**
+     * @brief
+     */
     public function __construct($schema)
     {
         $this->schema = $schema;
     }
 
-    public function Process($rawData)
+    /**
+     * @brief
+     */
+    public function Process($rawData, bool $validate = true)
     {
-        echo "ScriptedProcessor got as raw data:<br>";
-        foreach ($rawData as $key => $val) {
-            echo $key . ": " . $val . "<br>";
+        if ($validate and !Validate($rawData, $this->schema)) {
+            throw new HttpException(
+                "Schema validation of raw data using '" . $this->schema . "' failed!",
+                HttpStatusCode::INTERNAL_ERR
+            );
         }
-        if (!Validate($rawData, $this->schema)) {
-            echo "<b>Schema validation failed!</b><br>";
-        }
+        // Do something here
         $evaluatedData = array("eval1" => 4, "eval2" => 1);
         return $evaluatedData;
     }

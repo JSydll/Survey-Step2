@@ -5,8 +5,10 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__ . "/..";
+$ROOT = __DIR__ . "/../..";
 require_once "$ROOT/vendor/autoload.php";
+require_once "$ROOT/HttpException.php";
+
 use iio\libmergepdf\Merger;
 
 class PdfMerger
@@ -31,13 +33,14 @@ class PdfMerger
         foreach ($fileNames as $file) {
             $path = "$this->contentPath/$file";
             if (!file_exists($path) || !is_readable($path)) {
-                echo "Could access file '$file'! Skipping...<br>";
-                continue;
+                throw new HttpException(
+                    "Could not access file '$file'!",
+                    HttpStatusCode::INTERNAL_ERR
+                );
             }
             $merger->addFile($path);
         }
         $fileName = sys_get_temp_dir() . "/gen_" . uniqid() . ".pdf";
-        echo "Temporary file is '$fileName'<br>";
         file_put_contents($fileName, $merger->merge());
         return $fileName;
     }

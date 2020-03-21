@@ -40,6 +40,9 @@ OUT: token <-->
                     MailService (send result file)
                     IN: file name, email
 
+- The application uses exceptions to abort the normal flow if errors occur.
+- 
+
 ## Technologies & Tools
 
 - PHP 7.2

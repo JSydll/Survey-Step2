@@ -9,31 +9,44 @@ $ROOT = __DIR__ . "/../..";
 require_once "$ROOT/interfaces/IResultGenerator.php";
 
 require_once "$ROOT/schema/Validation.php";
-require_once "$ROOT/utility/PdfMerger.php";
+require_once __DIR__ . "/PdfMerger.php";
 
 class FileGenerator implements IResultGenerator
 {
     // Private members
     private $schemaFile;
     private $contentPath;
-    
+
+    /**
+     * @brief
+     */
     public function __construct($schemaFile, $contentPath)
     {
         $this->schemaFile = $schemaFile;
         $this->contentPath = $contentPath;
     }
 
-    public function GenerateFile($evaluatedData): string
+    /**
+     * @brief
+     */
+    public function Generate($evaluatedData, bool $validate = true): string
     {
-        echo "FileGenerator got as evaluated data:<br>";
-        foreach ($evaluatedData as $key => $val) {
-            echo $key . ": " . $val . "<br>";
+        if ($validate and !Validate($evaluatedData, $this->schemaFile)) {
+            throw new HttpException(
+                "Schema validation of raw data using '" . $this->schema . "' failed!",
+                HttpStatusCode::INTERNAL_ERR
+            );
         }
-        if (!Validate($evaluatedData, $this->schemaFile)) {
-            echo "<b>Schema validation failed!</b><br>";
-        }
-        echo "Creating result file...<br>";
         $merger = new PdfMerger($this->contentPath);
-        return $merger->MergeFiles(["page1.pdf", "page2.pdf"]);
+        // Do something special here
+        $fileName = $merger->MergeFiles(["page1.pdf", "page2.pdf"]);
+
+        if (empty($fileName)) {
+            throw new HttpException(
+                "Failed to generate result file!",
+                HttpStatusCode::INTERNAL_ERR
+            );
+        }
+        return $fileName;
     }
 }
