@@ -8,6 +8,7 @@
 $ROOT = __DIR__ . "/..";
 
 require_once "$ROOT/HttpException.php";
+require_once "$ROOT/Logger.php";
 
 function ParseSchema($schemaFile)
 {
@@ -27,7 +28,7 @@ function HasExpectedType($value, $typename)
 function Validate($map, $schemaFile)
 {
     if (!IsAssociativeArray($map)) {
-        // log "Data structure is not an associative array!<br>";
+        Logger::Log()->Error("Data structure is not an associative array!");
         return false;
     }
     $schema = ParseSchema($schemaFile);
@@ -40,11 +41,11 @@ function Validate($map, $schemaFile)
     }
     foreach ($schema as $expectedField => $expectedType) {
         if (!array_key_exists($expectedField, $map)) {
-            // log "Missing key " . $expectedField . " in map.<br>";
+            Logger::Log()->Error("Missing key " . $expectedField . " in map.");
             return false;
         }
         if (!HasExpectedType($map[$expectedField], $expectedType)) {
-            // log "Key " . $expectedField . " has wrong type (" . $expectedType . ")<br>";
+            Logger::Log()->Error("Key " . $expectedField . " has wrong type (" . $expectedType . ")");
             return false;
         }
     }

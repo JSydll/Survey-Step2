@@ -28,7 +28,7 @@ $step2 = new Step2($collect, $proc, $gen);
 $userToken = GetVar("token");
 $surveyId = GetVar("sid");
 // Run the evaluation (without validation)
-$step2->Run(intval($surveyId), $userToken, false);
+$step2->Run(intval($surveyId), $userToken, true);
 
 ?>
 <!DOCTYPE html>

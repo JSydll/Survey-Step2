@@ -15,6 +15,14 @@ class ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548
         array (
             'iio\\libmergepdf\\' => 16,
         ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -25,6 +33,14 @@ class ComposerStaticInitbfc411075b4eebd76c9af6ccfc438548
         'iio\\libmergepdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/iio/libmergepdf/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
     );
 
