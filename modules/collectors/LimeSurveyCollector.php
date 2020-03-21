@@ -53,6 +53,9 @@ class LimeSurveyCollector implements IDataCollector
         $this->rpcClient->release_session_key($this->sessionKey);
     }
 
+    /**
+     * @brief Fetches the survey result for a single survey participant.
+     */
     public function Fetch($surveyId, $token)
     {
         $result = base64_decode(
@@ -66,7 +69,28 @@ class LimeSurveyCollector implements IDataCollector
                 HttpStatusCode::NOT_FOUND
             );
         }
-        $data = json_decode($result);
-        return $data;
+        $parsed = $this->ParseSurveyData($result);
+
+        return $parsed;
+    }
+
+    /**
+     * @brief Parses the serialized result from the call to the Remote Control API
+     * Expects data to be in a certain format.
+     */
+    private function ParseSurveyData(string &$serialized)
+    {
+        $parsed = json_decode($serialized, true);
+        if ((!array_key_exists("responses", $parsed)) or
+            (count($parsed["responses"]) != 1) or
+            (count($parsed["responses"][0]) != 1) or
+            (count(array_values($parsed["responses"][0])[0]) == 0)
+        ) {
+            throw new HttpException(
+                "Got unexpected data from LimeSurvey: " . $serialized,
+                HttpStatusCode::INTERNAL_ERR
+            );
+        }
+        return array_values($parsed["responses"][0])[0];
     }
 }

@@ -64,5 +64,7 @@ Approach:
 
 ## Todos
 
+- -Use of Exceptions-
 - Logging
 - Scripting of data processing & file generation
+- Can the questions be tagged in the full result?

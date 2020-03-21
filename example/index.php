@@ -10,8 +10,15 @@ require_once "$ROOT/modules/collectors/LimeSurveyCollector.php";
 require_once "$ROOT/modules/processors/ScriptedProcessor.php";
 require_once "$ROOT/modules/result-generators/FileGenerator.php";
 require_once "$ROOT/Step2.php";
+require_once "$ROOT/HttpException.php";
 
 require_once __DIR__ . "/UrlVariables.php";
+
+function ToplevelExceptionHandler($exception)
+{
+    echo "<b>Exception:</b> '" . $exception->getMessage() . "' [" . $exception->getCode() . "]";
+}
+set_exception_handler('ToplevelExceptionHandler');
 
 $collect = new LimeSurveyCollector("http://localhost/limesurvey/index.php?r=", "admin", "admin");
 $proc = new ScriptedProcessor("$ROOT/schema/raw.ini");
@@ -20,6 +27,7 @@ $step2 = new Step2($collect, $proc, $gen);
 
 $userToken = GetVar("token");
 $surveyId = GetVar("sid");
+// Run the evaluation (without validation)
 $step2->Run(intval($surveyId), $userToken, false);
 
 ?>
