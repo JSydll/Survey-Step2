@@ -5,11 +5,11 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__ . "/../..";
-require_once "$ROOT/interfaces/IResultGenerator.php";
+namespace Step2;
 
-require_once "$ROOT/schema/Validation.php";
-require_once __DIR__ . "/PdfMerger.php";
+require_once __DIR__ . "/../../Step2.php";
+
+require_once "PdfMerger.php";
 
 class FileGenerator implements IResultGenerator
 {

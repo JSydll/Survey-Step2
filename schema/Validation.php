@@ -5,10 +5,9 @@
  * @author Joschka Seydell
  * @date 21.03.2020
  */
-$ROOT = __DIR__ . "/..";
+namespace Step2;
 
-require_once "$ROOT/HttpException.php";
-require_once "$ROOT/Logger.php";
+require_once "../Step2.php";
 
 function ParseSchema(string &$schemaFile)
 {

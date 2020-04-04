@@ -5,8 +5,9 @@
  * @author Joschka Seydell
  * @date 21.03.2020
  */
-$ROOT = __DIR__;
-require_once "$ROOT/vendor/autoload.php";
+namespace Step2;
+
+require_once "Step2.php";
 
 /**
  *
@@ -18,12 +19,12 @@ final class Logger
     // Logger parameters with default values
     private static $basePath = __DIR__;
     private static $name = "Global Logger";
-    private static $level = Monolog\Logger::INFO;
+    private static $level = \Monolog\Logger::INFO;
 
     /**
      *
      */
-    public static function Configure(string $basePath, string $name, $level = Monolog\Logger::INFO)
+    public static function Configure(string $basePath, string $name, $level = \Monolog\Logger::INFO)
     {
         self::$basePath = $basePath;
         self::$name = $name;
@@ -46,8 +47,8 @@ final class Logger
      */
     public function __construct()
     {
-        self::$impl = new Monolog\Logger(self::$name);
-        self::$impl->pushHandler(new Monolog\Handler\StreamHandler(self::$basePath . "/" . self::$name . ".log", self::$level));
+        self::$impl = new \Monolog\Logger(self::$name);
+        self::$impl->pushHandler(new \Monolog\Handler\StreamHandler(self::$basePath . "/" . self::$name . ".log", self::$level));
     }
 
     // Prevent illegal actions

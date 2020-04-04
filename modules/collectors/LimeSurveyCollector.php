@@ -5,12 +5,9 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__ . "/../..";
-require_once "$ROOT/interfaces/IDataCollector.php";
-require_once "$ROOT/schema/Validation.php";
+namespace Step2;
 
-require_once "$ROOT/vendor/autoload.php";
-require_once "$ROOT/HttpException.php";
+require_once __DIR__ . "/../../Step2.php";
 
 /**
  * @brief Implements the collection of raw survey data from LimeSurvey.

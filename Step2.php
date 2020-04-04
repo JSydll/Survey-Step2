@@ -5,54 +5,30 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__;
-require_once "$ROOT/interfaces/IDataCollector.php";
-require_once "$ROOT/interfaces/IProcessor.php";
-require_once "$ROOT/interfaces/IResultGenerator.php";
 
-require_once "$ROOT/HttpException.php";
+/** @brief Global settings of step two */
+$location = __DIR__;
+$namespaceName = "Step2";
 
-class Step2
-{
-    // Private data members
-    private $collector;
-    private $processor;
-    private $generator;
+/** @brief Dependencies */
+require_once "vendor/autoload.php";
 
-    private $results;
+/** @brief General includes */
+require_once "Logger.php";
+require_once "HttpException.php";
+require_once "ExceptionHandler.php";
 
-    /**
-     * @brief Constructor with dependency injection for the concrete implementations
-     *
-     * @param collector The interface to the external survey tool.
-     * @param proc Processor of raw data to turn it into something meaningful for the ResultGenerator.
-     * @param gen ResultGenerator
-     */
-    public function __construct(IDataCollector $collector, IProcessor $proc, IResultGenerator $gen)
-    {
-        $this->collector = $collector;
-        $this->processor = $proc;
-        $this->generator = $gen;
-    }
+/** @brief Interfaces */
+require_once "interfaces/IDataCollector.php";
+require_once "interfaces/IProcessor.php";
+require_once "interfaces/IResultGenerator.php";
 
-    /**
-     * @brief
-     */
-    public function Run(int $surveyId, int $responseId, bool $validate = true)
-    {
-        if (empty($responseId) or empty($surveyId)) {
-            throw new HttpException(
-                "Request has responseId or surveyId not set!",
-                HttpStatusCode::BAD_REQUEST
-            );
-        }
-        $rawData = $this->collector->Fetch($surveyId, $responseId);
-        $evaluatedData = $this->processor->Process($rawData, $validate);
-        $this->results = $this->generator->Generate($evaluatedData, $validate);
-    }
+/** @brief Implementations */
+require_once "Executor.php";
+require_once "RestApi.php";
 
-    public function GetResults()
-    {
-        return $this->results;
-    }
-}
+require_once "schema/Validation.php";
+
+require_once "modules/collectors/LimeSurveyCollector.php";
+require_once "modules/processors/ScriptedProcessor.php";
+require_once "modules/result-generators/FileGenerator.php";

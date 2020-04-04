@@ -5,9 +5,9 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__ . "/../..";
-require_once "$ROOT/vendor/autoload.php";
-require_once "$ROOT/HttpException.php";
+namespace Step2;
+
+require_once __DIR__ . "/../../Step2.php";
 
 use iio\libmergepdf\Merger;
 

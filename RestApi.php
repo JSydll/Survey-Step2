@@ -5,7 +5,7 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-$ROOT = __DIR__;
+namespace Step2;
 
 class RestApi
 {

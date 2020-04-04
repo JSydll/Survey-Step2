@@ -5,8 +5,9 @@
  * @author Joschka Seydell
  * @date 21.03.2020
  */
-$ROOT = __DIR__;
-require_once "$ROOT/Logger.php";
+namespace Step2;
+
+require_once "Step2.php";
 
 /**
  *

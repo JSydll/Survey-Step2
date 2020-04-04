@@ -5,6 +5,7 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
+namespace Step2;
 
 interface IProcessor
 {

@@ -5,7 +5,7 @@
  * @author Joschka Seydell
  * @date 21.03.2020
  */
-$ROOT = __DIR__;
+namespace Step2;
 
 /**
  * @brief
@@ -36,12 +36,12 @@ abstract class HttpStatusCode
     }
 }
 
-class HttpException extends Exception
+class HttpException extends \Exception
 {
     /**
      * @brief Constuctor enforcing the message and code to be set.
      */
-    public function __construct(string $message, int $code, Exception $previous = null)
+    public function __construct(string $message, int $code, \Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
