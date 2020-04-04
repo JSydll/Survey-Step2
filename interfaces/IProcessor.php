@@ -16,5 +16,5 @@ interface IProcessor
      * @param rawData Raw data received from the external survey tool.
      * @return evaluatedData Map of result characteristics.
      */
-    public function Process($rawData);
+    public function Process(array $rawData) : array;
 }

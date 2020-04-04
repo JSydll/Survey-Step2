@@ -16,5 +16,5 @@ interface IResultGenerator
      * @param evaluatedData Used to determine how to generate the result.
      * @return result Actual result data (differs on used implementation) 
      */
-    public function Generate($evaluatedData);
+    public function Generate(array $evaluatedData) : array;
 }

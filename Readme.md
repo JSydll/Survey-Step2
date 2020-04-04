@@ -63,4 +63,5 @@ The implementation of the `IDataCollector` uses the [LimeSurvey RemoteControl AP
 - ~~Use of Exceptions~~
 - ~~Logging~~
 - Scripting of data processing & file generation
-- Can the questions be tagged in the full result?
+- ~~Can the questions be tagged in the full result?~~
+- Improve take-by-reference

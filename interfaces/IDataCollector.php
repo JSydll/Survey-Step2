@@ -18,5 +18,5 @@ interface IDataCollector
      * @param responseId Id used to fetch the individual response from the external tool.
      * @return rawData Map of the data for all fields in the survey.
      */
-    public function Fetch($surveyId, $responseId);
+    public function Fetch(int $surveyId, int $responseId): array;
 }

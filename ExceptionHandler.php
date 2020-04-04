@@ -23,6 +23,7 @@ function LogException($exception)
             Logger::Log()->Warning("[" . $exception->getCode() . "] " . $exception->getMessage());
             break;
         default:
-            Logger::Log()->Info("[" . $exception->getCode() . "] " . $exception->getMessage());
+            Logger::Log()->Error("[" . $exception->getCode() . "] " . $exception->getMessage()
+                . " in " . $exception->getFile() . ":" . $exception->getLine());
     }
 }

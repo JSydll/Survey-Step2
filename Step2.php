@@ -19,7 +19,7 @@ class Step2
     private $processor;
     private $generator;
 
-    private $resultFile;
+    private $results;
 
     /**
      * @brief Constructor with dependency injection for the concrete implementations
@@ -36,23 +36,23 @@ class Step2
     }
 
     /**
-     * @brief 
+     * @brief
      */
-    public function Run(int $surveyId, string $userToken, bool $validate = true)
+    public function Run(int $surveyId, int $responseId, bool $validate = true)
     {
-        if (empty($userToken) or empty($surveyId)) {
+        if (empty($responseId) or empty($surveyId)) {
             throw new HttpException(
-                "Token or surveyId not set!",
+                "Request has responseId or surveyId not set!",
                 HttpStatusCode::BAD_REQUEST
             );
         }
-        $rawData = $this->collector->Fetch($surveyId, $userToken);
+        $rawData = $this->collector->Fetch($surveyId, $responseId);
         $evaluatedData = $this->processor->Process($rawData, $validate);
-        $this->resultFile = $this->generator->Generate($evaluatedData, $validate);
+        $this->results = $this->generator->Generate($evaluatedData, $validate);
     }
 
-    public function GetResultFile()
+    public function GetResults()
     {
-        return $this->resultFile;
+        return $this->results;
     }
 }

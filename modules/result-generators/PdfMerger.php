@@ -27,7 +27,7 @@ class PdfMerger
      * @param fileNames List of valid PDF files.
      * @return mergedFile Path of the resulting merged file.
      */
-    public function MergeFiles($fileNames): string
+    public function MergeFiles(array &$fileNames): string
     {
         $merger = new Merger;
         foreach ($fileNames as $file) {

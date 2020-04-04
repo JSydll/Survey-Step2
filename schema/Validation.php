@@ -10,7 +10,7 @@ $ROOT = __DIR__ . "/..";
 require_once "$ROOT/HttpException.php";
 require_once "$ROOT/Logger.php";
 
-function ParseSchema($schemaFile)
+function ParseSchema(string &$schemaFile)
 {
     return parse_ini_file($schemaFile);
 }
@@ -20,12 +20,12 @@ function IsAssociativeArray($arr)
     return (array_keys($arr) !== range(0, count($arr) - 1));
 }
 
-function HasExpectedType($value, $typename)
+function HasExpectedType($value, string &$typename)
 {
     return (gettype($value) == $typename);
 }
 
-function Validate($map, $schemaFile)
+function Validate(array &$map, string &$schemaFile)
 {
     if (!IsAssociativeArray($map)) {
         Logger::Log()->Error("Data structure is not an associative array!");

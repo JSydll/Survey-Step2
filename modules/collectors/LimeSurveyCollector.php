@@ -33,7 +33,7 @@ class LimeSurveyCollector implements IDataCollector
      * @param user User name used to connect to LimeSurvey's Remote Control API.
      * @param pass Password for the user.
      */
-    public function __construct($baseUrl, $user, $pass)
+    public function __construct(string $baseUrl, string $user, string $pass)
     {
         $this->rpcClient = new \org\jsonrpcphp\JsonRPCClient($baseUrl . 'admin/remotecontrol');
         $this->sessionKey = $this->rpcClient->get_session_key($user, $pass);
@@ -56,7 +56,7 @@ class LimeSurveyCollector implements IDataCollector
     /**
      * @brief Fetches the survey result for a single survey participant.
      */
-    public function Fetch($surveyId, $responseId)
+    public function Fetch(int $surveyId, int $responseId): array
     {
         /** @note Documentation on the LimeSurvey Remote Control API can be found here:
          * https: //github.com/LimeSurvey/LimeSurvey/blob/2c60503c767ef98d79377445cd7d380ecfd542d3/application/helpers/remotecontrol/remotecontrol_handle.php
@@ -74,7 +74,6 @@ class LimeSurveyCollector implements IDataCollector
             );
         }
         $parsed = $this->ParseSurveyData($result);
-
         return $parsed;
     }
 
@@ -82,7 +81,7 @@ class LimeSurveyCollector implements IDataCollector
      * @brief Parses the serialized result from the call to the Remote Control API
      * Expects data to be in a certain format.
      */
-    private function ParseSurveyData(string &$serialized)
+    private function ParseSurveyData(string &$serialized): array
     {
         $parsed = json_decode($serialized, true);
         if ((!array_key_exists("responses", $parsed)) or
