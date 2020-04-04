@@ -24,10 +24,10 @@ $proc = new ScriptedProcessor("$Step2/schema/raw.ini");
 $gen = new FileGenerator("$Step2/schema/evaluated.ini", "$Step2/content/pdf");
 $step2 = new Step2($collect, $proc, $gen);
 
-$userToken = GetVar("token");
+$responseId = GetVar("response");
 $surveyId = GetVar("sid");
 // Run the evaluation (without validation)
-$step2->Run(intval($surveyId), $userToken, false);
+$step2->Run(intval($surveyId), intval($responseId), false);
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ $step2->Run(intval($surveyId), $userToken, false);
 <head>
 </head>
 <body>
-    <?php Logger::Log()->Info("Processed request for survey '$surveyId' and token '$userToken'.");?>
+    <?php Logger::Log()->Info("Processed request for survey '$surveyId' and responseId '$responseId'.");?>
     <h1>Step2 Test</h1>
     <?php echo "Generated file: " . $step2->GetResultFile(); ?>
 </body>

@@ -56,16 +56,20 @@ class LimeSurveyCollector implements IDataCollector
     /**
      * @brief Fetches the survey result for a single survey participant.
      */
-    public function Fetch($surveyId, $token)
+    public function Fetch($surveyId, $responseId)
     {
+        /** @note Documentation on the LimeSurvey Remote Control API can be found here:
+         * https: //github.com/LimeSurvey/LimeSurvey/blob/2c60503c767ef98d79377445cd7d380ecfd542d3/application/helpers/remotecontrol/remotecontrol_handle.php
+         */
         $result = base64_decode(
-            $this->rpcClient->export_responses_by_token(
+            $this->rpcClient->export_responses(
                 $this->sessionKey, $surveyId, "json",
-                $token, null, "complete", "full"
+                null, "complete", "code", "full",
+                $responseId, $responseId
             ));
         if (empty($result)) {
             throw new HttpException(
-                "Could not fetch data for token '$token' from LimeSurvey.",
+                "Could not fetch data for responseId '$responseId' from LimeSurvey.",
                 HttpStatusCode::NOT_FOUND
             );
         }

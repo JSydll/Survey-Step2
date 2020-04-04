@@ -15,8 +15,8 @@ interface IDataCollector
      * acquiring the data.
      *
      * @param surveyId Id of the survey.
-     * @param token Access token used to connect to the external tool.
+     * @param responseId Id used to fetch the individual response from the external tool.
      * @return rawData Map of the data for all fields in the survey.
      */
-    public function Fetch($surveyId, $token);
+    public function Fetch($surveyId, $responseId);
 }

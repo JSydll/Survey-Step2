@@ -53,13 +53,9 @@ OUT: token <-->
 
 ## LimeSurvey implementation
 
-Approach: 
-- The survey must enforce a participant list with access tokens.
-- This enforces URLs like `<SurveyUrl>/index.php?r=survey/index&sid=<SID>&token=<TOKEN>`.
-- Unfortunately, the survey cannot be fully anonymized as no correlation betwwen tokens and answers would be possible in this case. However, the survey should not capture timestamps and personal data.
-- The token will be stored alongside with the results of the participant.
-- The last page of LimeSurvey needs to implement a link to this survey-evaluator with the parameter `?sid={SID]&token={TOKEN}`. This leverages the LimeSurvey ExpressionManager syntax.
-- The implementation of the `IDataCollector` uses the [LimeSurvey RemoteControl API 2](https://manual.limesurvey.org/RemoteControl_2_API) to fetch the results of the participant by his token.
+The last page of LimeSurvey needs to implement a link to this application with the URL parameters `?sid={SID]&response={SAVEDID}`. This leverages the LimeSurvey ExpressionManager syntax and makes the survey ID and individual response ID available for querying data. According to the [documentation of URL fields](https://manual.limesurvey.org/URL_fields), LimeSurvey can even automatically forward the user to the step2 application.
+
+The implementation of the `IDataCollector` uses the [LimeSurvey RemoteControl API 2](https://manual.limesurvey.org/RemoteControl_2_API) to fetch the results of the participant by his response id.
 
 
 ## Todos
