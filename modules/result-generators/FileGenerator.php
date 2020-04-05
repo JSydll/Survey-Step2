@@ -16,28 +16,20 @@ class FileGenerator implements IResultGenerator
     // Private members
     private $schemaFile;
     private $contentPath;
-    private $scriptFunctor;
+    private $scriptCallable;
 
     /**
      * @brief
      * @param schemaFile Used to validate the preprocessed data passed in the Generate(...) method.
      * @param contentPath Path where the files are located that the Generate(...) method should combine.
-     * @param scriptFunctor Method to be run to generate the results. Must match a signature
-     * of function(array):array and pass a self-test with an empty array resulting in an
-     * empty array itself.
+     * @param scriptCallable A callable implementation of the script to be executed to
+     * actually process the data.
      */
-    public function __construct(string $schemaFile, string $contentPath, callable $scriptFunctor)
+    public function __construct(string $schemaFile, string $contentPath, IScriptCallable &$scriptCallable)
     {
         $this->schemaFile = $schemaFile;
         $this->contentPath = $contentPath;
-        // Self-test
-        if (($scriptFunctor == null) or (!is_array($scriptFunctor([])))) {
-            throw new HttpException(
-                "No suitable script functor set for FileGenerator.",
-                HttpStatusCode::INTERNAL_ERR
-            );
-        }
-        $this->scriptFunctor = $scriptFunctor;
+        $this->scriptCallable = $scriptCallable;
     }
 
     /**
@@ -53,7 +45,7 @@ class FileGenerator implements IResultGenerator
         }
         $merger = new PdfMerger($this->contentPath);
 
-        $sources = call_user_func($this->scriptFunctor, $evaluatedData);
+        $sources = $this->scriptCallable->Run($evaluatedData);
 
         $resultFile = $merger->MergeFiles($sources);
 

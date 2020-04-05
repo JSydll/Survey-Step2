@@ -22,6 +22,7 @@ require_once "ExceptionHandler.php";
 require_once "interfaces/IDataCollector.php";
 require_once "interfaces/IProcessor.php";
 require_once "interfaces/IResultGenerator.php";
+require_once "interfaces/IScriptCallable.php";
 
 /** @brief Implementations */
 require_once "Executor.php";

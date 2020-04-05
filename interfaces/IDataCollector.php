@@ -7,6 +7,9 @@
  */
 namespace Step2;
 
+/**
+ * 
+ */
 interface IDataCollector
 {
     /**

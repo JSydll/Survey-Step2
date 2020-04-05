@@ -16,10 +16,10 @@ set_exception_handler("Step2\LogException");
 
 $collect = new Step2\LimeSurveyCollector("http://localhost/limesurvey/index.php?r=", "admin", "admin");
 
-$evalScript = function (array $data) {return EvaluationScript\Run($data);};
+$evalScript = new EvaluationScript();
 $proc = new Step2\ScriptedProcessor("$location/schema/raw.ini", $evalScript);
 
-$genScript = function (array $data) {return GenerationScript\Run($data);};
+$genScript = new GenerationScript();
 $gen = new Step2\FileGenerator("$location/schema/evaluated.ini", "$location/content/pdf", $genScript);
 
 $exec = new Step2\Executor($collect, $proc, $gen);

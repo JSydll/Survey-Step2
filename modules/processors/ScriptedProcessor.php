@@ -13,26 +13,18 @@ class ScriptedProcessor implements IProcessor
 {
     // Private members
     private $schemaFile;
-    private $scriptFunctor;
+    private $scriptCallable;
 
     /**
      * @brief
      * @param schemaFile Used to validate the raw data passed in the Process(...) method.
-     * @param scriptFunctor Method to be run to evaluate the data. Must match a signature
-     * of function(array):array and pass a self-test with an empty array resulting in an
-     * empty array itself.
+     * @param scriptCallable A callable implementation of the script to be executed to 
+     * actually process the data. 
      */
-    public function __construct(string $schemaFile, callable $scriptFunctor)
+    public function __construct(string $schemaFile, IScriptCallable &$scriptCallable)
     {
         $this->schemaFile = $schemaFile;
-        // Self-test
-        if (($scriptFunctor == null) or (!is_array($scriptFunctor([])))) {
-            throw new HttpException(
-                "No suitable script functor set for ScriptedProcessor.",
-                HttpStatusCode::INTERNAL_ERR
-            );
-        }
-        $this->scriptFunctor = $scriptFunctor;
+        $this->scriptCallable = $scriptCallable;
     }
 
     /**
@@ -46,6 +38,6 @@ class ScriptedProcessor implements IProcessor
                 HttpStatusCode::INTERNAL_ERR
             );
         }
-        return call_user_func($this->scriptFunctor, $rawData);
+        return $this->scriptCallable->Run($rawData);
     }
 }

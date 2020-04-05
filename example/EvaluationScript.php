@@ -5,9 +5,12 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-namespace EvaluationScript;
+require_once __DIR__ . "/../Step2.php";
 
-function Run(array &$data): array
+class EvaluationScript implements Step2\IScriptCallable
 {
-    return $data;
+    public function Run(array &$data): array
+    {
+        return $data;
+    }
 }

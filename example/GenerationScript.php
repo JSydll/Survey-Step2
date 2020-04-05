@@ -5,10 +5,13 @@
  * @author Joschka Seydell
  * @date 07.03.2020
  */
-namespace GenerationScript;
+require_once __DIR__ . "/../Step2.php";
 
-function Run(array &$data): array
+class GenerationScript implements Step2\IScriptCallable
 {
-    $files = ["page1.pdf", "page2.pdf"];
-    return $files;
+    public function Run(array &$data): array
+    {
+        $files = ["page1.pdf", "page2.pdf"];
+        return $files;
+    }
 }
