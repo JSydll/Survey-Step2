@@ -7,7 +7,7 @@
  */
 namespace Step2;
 
-require_once "Step2.php";
+require_once "Logger.php";
 
 /**
  *

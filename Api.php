@@ -7,7 +7,7 @@
  */
 namespace Step2;
 
-class RestApi
+class Api
 {
 
 }

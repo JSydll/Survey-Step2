@@ -13,11 +13,6 @@ $namespaceName = "Step2";
 /** @brief Dependencies */
 require_once "vendor/autoload.php";
 
-/** @brief General includes */
-require_once "Logger.php";
-require_once "HttpException.php";
-require_once "ExceptionHandler.php";
-
 /** @brief Interfaces */
 require_once "interfaces/IDataCollector.php";
 require_once "interfaces/IProcessor.php";
@@ -25,10 +20,15 @@ require_once "interfaces/IResultGenerator.php";
 require_once "interfaces/IScriptCallable.php";
 
 /** @brief Implementations */
-require_once "Executor.php";
-require_once "RestApi.php";
+require_once "modules/Logger.php";
+require_once "modules/HttpException.php";
+require_once "modules/ExceptionHandler.php";
+require_once "modules/Mailer.php";
 
 require_once "schema/Validation.php";
+
+require_once "Executor.php";
+require_once "Api.php";
 
 require_once "modules/collectors/LimeSurveyCollector.php";
 require_once "modules/processors/ScriptedProcessor.php";
