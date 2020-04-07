@@ -54,11 +54,13 @@ class Api
         }
     }
 
-    private function PopulateResponseFromException(HttpException $e, Response &$response)
+    private function CreateErrorResponse(string $message, int $code, Response &$response)
     {
-        $response = $response->withStatus($e->getCode());
-        $error = new ErrorDescriptor($e->getMessage());
+        Logger::Log()->Error($message);
+        $response = $response->withHeader('Content-Type', 'application/json');
+        $error = new ErrorDescriptor($message);
         $response->getBody()->write(\json_encode($error));
+        return $response->withStatus($code);
     }
 
     private function SetupEndpoints()
@@ -76,11 +78,9 @@ class Api
                 $results = $this->exec->GetResults();
                 $response->getBody()->write(\json_encode($results));
                 // Standard response code is 200 which is fine here.
-            } catch (HttpException $e) {
-                LogException($e);
-                $this->PopulateResponseFromException($e, $response);
-            } finally {
                 return $response->withHeader('Content-Type', 'application/json');
+            } catch (HttpException $e) {
+                return $this->CreateErrorResponse($e->getMessage(), $e->getCode(), $response);
             }
         });
     }
@@ -97,11 +97,9 @@ class Api
                     );
                 }
                 $this->mailer->Send($payload['recipients'], $payload['subject'], $payload['message']);
+                return $response;
             } catch (HttpException $e) {
-                LogException($e);
-                $this->PopulateResponseFromException($e, $response);
-            } finally {
-                return $response->withHeader('Content-Type', 'application/json');
+                return $this->CreateErrorResponse($e->getMessage(), $e->getCode(), $response);
             }
         });
     }
@@ -110,26 +108,21 @@ class Api
     {
         $customErrorHandler = function (
             \Psr\Http\Message\ServerRequestInterface $request,
-            \Throwable $exception,
-            bool $displayErrorDetails,
-            bool $logErrors,
-            bool $logErrorDetails
+            \Throwable $e, bool $displayDetails, bool $log, bool $logDetails
         ) {
             $response = $this->slim->getResponseFactory()->createResponse();
 
-            if ($exception instanceof \Slim\Exception\HttpNotFoundException) {
+            if ($e instanceof \Slim\Exception\HttpNotFoundException) {
                 $message = "Route '" . $request->getUri()->getPath() . "' not found!";
                 $code = HttpStatusCode::NOT_FOUND;
-            } elseif ($exception instanceof HttpException) {
-                $message = $exception->getMessage();
-                $code = $exception->getCode();
+            } elseif ($e instanceof HttpException) {
+                $message = $e->getMessage();
+                $code = $e->getCode();
             } else {
-                $message = $exception->getMessage();
+                $message = $e->getMessage();
                 $code = HttpStatusCode::INTERNAL_ERR;
             }
-            Logger::Log()->Warning($message);
-            $response->getBody()->write($message);
-            return $response->withStatus($code);
+            return $this->CreateErrorResponse($message, $code, $response);
         };
         $errorMiddleware = $this->slim->addErrorMiddleware(true, true, true);
         $errorMiddleware->setDefaultErrorHandler($customErrorHandler);
