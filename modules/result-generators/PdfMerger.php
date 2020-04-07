@@ -15,10 +15,12 @@ class PdfMerger
 {
     // Private members
     private $contentPath;
+    private $basePath;
 
-    public function __construct($contentPath)
+    public function __construct(string $contentPath, string $basePath = '')
     {
         $this->contentPath = $contentPath;
+        $this->basePath = (empty($basePath) ? \sys_get_temp_dir() : $basePath);
     }
 
     /**
@@ -40,8 +42,8 @@ class PdfMerger
             }
             $merger->addFile($path);
         }
-        $fileName = sys_get_temp_dir() . "/gen_" . uniqid() . ".pdf";
-        file_put_contents($fileName, $merger->merge());
-        return $fileName;
+        $filePath = "$this->basePath/gen_" . uniqid() . ".pdf";
+        file_put_contents($filePath, $merger->merge());
+        return $filePath;
     }
 }

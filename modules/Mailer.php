@@ -14,13 +14,19 @@ class EmailContact
 {
     public $address;
     public $name;
+
+    public function __construct(string $address, string $name)
+    {
+        $this->address = $address;
+        $this->name = $name;
+    }
 }
 
 /**
  * @brief Checks if the given string is a valid email
  * @param address Email to be checked.
  */
-function IsValidEmail(string $address): boolean
+function IsValidEmail(string $address)
 {
     return \filter_var($address, FILTER_VALIDATE_EMAIL);
 }
@@ -29,7 +35,7 @@ function IsValidEmail(string $address): boolean
  * @brief Checks if the given path refers to a valid file
  * @param path File path to be checked.
  */
-function IsValidFile(string $path): boolean
+function IsValidFile(string $path)
 {
     return \is_file($path);
 }
@@ -52,16 +58,16 @@ class Mailer
      */
     public function __construct(string $host, int $port, string $user, string $pass, EmailContact $sender)
     {
-        $this->mail = new PHPMailer\PHPMailer\PHPMailer();
+        $this->mail = new \PHPMailer\PHPMailer\PHPMailer();
         $this->mail->isSMTP();
         $this->mail->Host = $host;
         $this->mail->SMTPAuth = true;
         $this->mail->Username = $user;
         $this->mail->Password = $pass;
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->Port = $port;
 
-        if (!IsValidEmail($sender)) {
+        if (!IsValidEmail($sender->address)) {
             throw new HttpException(
                 "Sender mail not valid ('$sender->address').",
                 HttpStatusCode::BAD_REQUEST

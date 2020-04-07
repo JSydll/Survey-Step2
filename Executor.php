@@ -48,7 +48,7 @@ class Executor
         $this->results = $this->generator->Generate($evaluatedData, $validate);
     }
 
-    public function GetResults()
+    public function GetResults(): ISurveyResult
     {
         return $this->results;
     }
