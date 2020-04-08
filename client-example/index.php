@@ -32,6 +32,6 @@ $parsed = json_decode((string) $res->getBody(), true);
 </head>
 <body>
     <h1>Step2 Test</h1>
-    <?php echo "Generated file: " . $parsed["resultFileUrl"]; ?>
+    <?php echo '<pre>' . var_export($parsed, true) . '</pre>'; ?>
 </body>
 </html>

@@ -11,7 +11,7 @@ class GenerationScript implements Step2\IScriptCallable
 {
     public function Run(array &$data): array
     {
-        $files = ["page1.pdf", "page2.pdf"];
-        return $files;
+        $data = ["file1" => "page1.pdf", "file2" => "page2.pdf"];
+        return $data;
     }
 }

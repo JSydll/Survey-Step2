@@ -52,7 +52,7 @@ class Executor
         $this->results = $this->generator->Generate($evaluatedData, $this->validationOn);
     }
 
-    public function GetResults(): ISurveyResult
+    public function GetResults(): DataObject
     {
         return $this->results;
     }

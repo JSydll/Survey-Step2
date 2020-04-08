@@ -11,21 +11,13 @@ require_once __DIR__ . "/../../Step2.php";
 
 require_once "PdfMerger.php";
 
-class FileResult implements ISurveyResult
+class FileDescriptor extends DataObject
 {
-    public $resultFileUrl;
+    public $path;
 
-    public function __construct(string $fileUrl)
+    public function __construct(string $path)
     {
-        $this->resultFileUrl = $fileUrl;
-    }
-
-    public function Get(string $key)
-    {
-        switch ($key) {
-            case 'resultFileUrl':return $this->resultFileUrl;
-            default:return null;
-        }
+        $this->path = $path;
     }
 }
 
@@ -56,9 +48,9 @@ class FileGenerator implements IResultGenerator
     /**
      * @brief
      */
-    public function Generate(array $evaluatedData, bool $validate = true): ISurveyResult
+    public function Generate(array $processedData, bool $validate = true): DataObject
     {
-        if ($validate and !Validate($evaluatedData, $this->schemaFile)) {
+        if ($validate and !Validate($processedData, $this->schemaFile)) {
             throw new HttpException(
                 "Schema validation of raw data using '" . $this->schema . "' failed!",
                 HttpStatusCode::INTERNAL_ERR
@@ -66,7 +58,7 @@ class FileGenerator implements IResultGenerator
         }
         $merger = new PdfMerger($this->contentPath, $this->fileBasePath);
 
-        $sources = $this->scriptCallable->Run($evaluatedData);
+        $sources = $this->scriptCallable->Run($processedData);
 
         $filePath = $merger->MergeFiles($sources);
 
@@ -76,6 +68,6 @@ class FileGenerator implements IResultGenerator
                 HttpStatusCode::INTERNAL_ERR
             );
         }
-        return new FileResult($filePath);
+        return new FileDescriptor($filePath);
     }
 }

@@ -7,13 +7,16 @@
  */
 namespace Step2;
 
-interface ISurveyResult
+abstract class DataObject
 {
-    public function Get(string $key);
+    public function __get($propertyName)
+    {
+        return $this->$propertyName;
+    }
 }
 
 /**
- * 
+ *
  */
 interface IResultGenerator
 {
@@ -21,9 +24,9 @@ interface IResultGenerator
      * @brief Generates a custom tailored result.
      *
      * @note Throws an exception if the reuslt cannot be generated.
-     * 
+     *
      * @param evaluatedData Used to determine how to generate the result.
-     * @return result Actual result data (differs on used implementation) 
+     * @return result Actual result data (differs on used implementation)
      */
-    public function Generate(array $evaluatedData) : ISurveyResult;
+    public function Generate(array $evaluatedData): DataObject;
 }
