@@ -66,6 +66,7 @@ The implementation of the `IDataCollector` uses the [LimeSurvey RemoteControl AP
 - ~~Can the questions be tagged in the full result?~~
 - ~~Improve take-by-reference~~
 - ~~Implement mailer~~
-- Api implementation
+- ~~Api implementation~~
+- ~~Implementation of client in example~~
+- Web template for client example
 - Separation of example and step2 code (into composer project)
-- Implementation of client in example
