@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . "/../Step2.php";
+require_once __DIR__ . "/../../Step2.php";
 require_once "EvaluationScript.php";
 require_once "GenerationScript.php";
 
@@ -25,4 +25,4 @@ $exec = new Step2\Executor($collect, $proc, $gen, false);
 $sender = new Step2\EmailContact("admin@example.com", "The Admin");
 $mailer = new Step2\Mailer("smtp-server.host.com", 587, "sample-user", "sample-pass", $sender);
 
-$step2api = new Step2\Api($exec, $mailer, '/survey-step2/api-example');
+$step2api = new Step2\Api($exec, $mailer, '/survey-step2/examples/api');

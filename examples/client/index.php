@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 require_once "UrlVariables.php";
 
@@ -17,7 +17,7 @@ if (empty($responseId) or empty($surveyId)) {
 }
 
 $client = new GuzzleHttp\Client();
-$res = $client->request('GET', "http://localhost:80/survey-step2/api-example/survey/$surveyId/response/$responseId/results");
+$res = $client->request('GET', "http://localhost:80/survey-step2/examples/api/survey/$surveyId/response/$responseId/results");
 
 if ($res->getStatusCode() != "200") {
     throw new Exception("Expected successful api call but got " . $res->getStatusCode());
