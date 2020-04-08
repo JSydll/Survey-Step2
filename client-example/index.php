@@ -22,12 +22,12 @@ $proc = new Step2\ScriptedProcessor("$location/schema/raw.ini", $evalScript);
 $genScript = new GenerationScript();
 $gen = new Step2\FileGenerator("$location/schema/evaluated.ini", "$location/content/pdf", $genScript);
 
-$exec = new Step2\Executor($collect, $proc, $gen);
+$exec = new Step2\Executor($collect, $proc, $gen, false);
 
 $responseId = GetVar("response");
 $surveyId = GetVar("sid");
 // Run the evaluation (without validation)
-$exec->Run(intval($surveyId), intval($responseId), false);
+$exec->Run(intval($surveyId), intval($responseId));
 
 ?>
 <!DOCTYPE html>

@@ -22,6 +22,18 @@ class ErrorDescriptor
     }
 }
 
+class VersionDescriptor
+{
+    public $hash;
+    public $number;
+
+    public function __construct(string $hash, string $number)
+    {
+        $this->hash = $hash;
+        $this->number = $number;
+    }
+}
+
 class Api
 {
     private $exec;
@@ -29,12 +41,14 @@ class Api
 
     private $slim;
 
-    public function __construct(Executor $executor, Mailer $mailer)
+    public function __construct(Executor $executor, Mailer $mailer, string $apiBasePath = '/')
     {
         $this->exec = $executor;
         $this->mailer = $mailer;
 
         $this->slim = \Slim\Factory\AppFactory::create();
+        $this->slim->setBasePath($apiBasePath);
+
         $this->SetupEndpoints();
         $this->SetupErrorHandling();
 
@@ -57,17 +71,26 @@ class Api
     private function CreateErrorResponse(string $message, int $code, Response &$response)
     {
         Logger::Log()->Error($message);
-        $response = $response->withHeader('Content-Type', 'application/json');
+        $response = $response->withStatus($code);
         $error = new ErrorDescriptor($message);
         $response->getBody()->write(\json_encode($error));
-        return $response->withStatus($code);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
     private function SetupEndpoints()
     {
-        // Valid endpoints
+        $this->SetupGetVersion();
         $this->SetupGetSurveyResults();
         $this->SetupPostServicesSendmail();
+    }
+
+    private function SetupGetVersion()
+    {
+        $this->slim->get('/version', function (Request $request, Response $response) {
+            $version = new VersionDescriptor('1cd115', '0.1');
+            $response->getBody()->write(\json_encode($version));
+            return $response->withHeader('Content-Type', 'application/json');
+        });
     }
 
     private function SetupGetSurveyResults()

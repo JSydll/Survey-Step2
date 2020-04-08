@@ -20,10 +20,9 @@ $proc = new Step2\ScriptedProcessor("$location/schema/raw.ini", $evalScript);
 $genScript = new GenerationScript();
 $gen = new Step2\FileGenerator("$location/schema/evaluated.ini", "$location/content/pdf", $genScript);
 
-$exec = new Step2\Executor($collect, $proc, $gen);
+$exec = new Step2\Executor($collect, $proc, $gen, false);
 
 $sender = new Step2\EmailContact("admin@example.com", "The Admin");
 $mailer = new Step2\Mailer("smtp-server.host.com", 587, "sample-user", "sample-pass", $sender);
 
-$step2api = new Step2\Api($exec, $mailer);
-
+$step2api = new Step2\Api($exec, $mailer, '/survey-step2/api-example');

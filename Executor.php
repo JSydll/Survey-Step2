@@ -16,6 +16,8 @@ class Executor
     private $processor;
     private $generator;
 
+    private $validationOn;
+
     private $results;
 
     /**
@@ -24,18 +26,20 @@ class Executor
      * @param collector The interface to the external survey tool.
      * @param proc Processor of raw data to turn it into something meaningful for the ResultGenerator.
      * @param gen ResultGenerator
+     * @þaram validationOn
      */
-    public function __construct(IDataCollector $collector, IProcessor $proc, IResultGenerator $gen)
+    public function __construct(IDataCollector $collector, IProcessor $proc, IResultGenerator $gen, bool $validationOn = true)
     {
         $this->collector = $collector;
         $this->processor = $proc;
         $this->generator = $gen;
+        $this->validationOn = $validationOn;
     }
 
     /**
      * @brief
      */
-    public function Run(int $surveyId, int $responseId, bool $validate = true)
+    public function Run(int $surveyId, int $responseId)
     {
         if (empty($responseId) or empty($surveyId)) {
             throw new HttpException(
@@ -44,8 +48,8 @@ class Executor
             );
         }
         $rawData = $this->collector->Fetch($surveyId, $responseId);
-        $evaluatedData = $this->processor->Process($rawData, $validate);
-        $this->results = $this->generator->Generate($evaluatedData, $validate);
+        $evaluatedData = $this->processor->Process($rawData, $this->validationOn);
+        $this->results = $this->generator->Generate($evaluatedData, $this->validationOn);
     }
 
     public function GetResults(): ISurveyResult
