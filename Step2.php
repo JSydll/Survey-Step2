@@ -11,28 +11,28 @@ $location = __DIR__;
 $namespaceName = "Step2";
 
 /** @brief Dependencies */
-require_once "vendor/autoload.php";
+require_once "$location/vendor/autoload.php";
 
 /** @brief Interfaces */
-require_once "interfaces/IDataCollector.php";
-require_once "interfaces/IProcessor.php";
-require_once "interfaces/IResultGenerator.php";
-require_once "interfaces/IScriptCallable.php";
+require_once "$location/interfaces/IDataCollector.php";
+require_once "$location/interfaces/IProcessor.php";
+require_once "$location/interfaces/IResultGenerator.php";
+require_once "$location/interfaces/IScriptCallable.php";
 
 /** @brief Implementations */
-require_once "modules/Logger.php";
-require_once "modules/HttpException.php";
-require_once "modules/ExceptionHandler.php";
-require_once "modules/Mailer.php";
+require_once "$location/modules/Logger.php";
+require_once "$location/modules/HttpException.php";
+require_once "$location/modules/ExceptionHandler.php";
+require_once "$location/modules/Mailer.php";
 
-require_once "schema/Validation.php";
+require_once "$location/schema/Validation.php";
 
-require_once "Executor.php";
-require_once "Api.php";
+require_once "$location/Executor.php";
+require_once "$location/Api.php";
 
-require_once "modules/collectors/LimeSurveyCollector.php";
-require_once "modules/processors/ScriptedProcessor.php";
-require_once "modules/result-generators/ScriptedGenerator.php";
-require_once "modules/result-generators/MapGenerator.php";
-require_once "modules/result-generators/FileGenerator.php";
-require_once "modules/ForwardingScript.php";
+require_once "$location/modules/collectors/LimeSurveyCollector.php";
+require_once "$location/modules/processors/ScriptedProcessor.php";
+require_once "$location/modules/result-generators/ScriptedGenerator.php";
+require_once "$location/modules/result-generators/MapGenerator.php";
+require_once "$location/modules/result-generators/FileGenerator.php";
+require_once "$location/modules/ForwardingScript.php";
