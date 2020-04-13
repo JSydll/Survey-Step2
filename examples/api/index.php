@@ -18,7 +18,7 @@ $evalScript = new EvaluationScript();
 $proc = new Step2\ScriptedProcessor("$location/schema/raw.ini", $evalScript);
 
 $genScript = new GenerationScript();
-$gen = new Step2\DataGenerator("$location/schema/evaluated.ini", $genScript);
+$gen = new Step2\MapGenerator("$location/schema/evaluated.ini", $genScript);
 
 $exec = new Step2\Executor($collect, $proc, $gen, false);
 

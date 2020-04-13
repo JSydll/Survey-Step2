@@ -58,11 +58,8 @@ function CreateMap(array &$assocArray): Map
     return new Map($values);
 }
 
-class DataGenerator implements IResultGenerator
+class MapGenerator extends ScriptedGenerator
 {
-    // Private members
-    private $schemaFile;
-    private $scriptCallable;
 
     /**
      * @brief
@@ -71,8 +68,7 @@ class DataGenerator implements IResultGenerator
      */
     public function __construct(string $schemaFile, IScriptCallable &$scriptCallable)
     {
-        $this->schemaFile = $schemaFile;
-        $this->scriptCallable = $scriptCallable;
+        parent::__construct($schemaFile, $scriptCallable);
     }
 
     /**
@@ -80,15 +76,7 @@ class DataGenerator implements IResultGenerator
      */
     public function Generate(array $processedData, bool $validate = true): DataObject
     {
-        if ($validate and !Validate($processedData, $this->schemaFile)) {
-            throw new HttpException(
-                "Schema validation of raw data using '" . $this->schema . "' failed!",
-                HttpStatusCode::INTERNAL_ERR
-            );
-        }
-
-        $assocArray = $this->scriptCallable->Run($processedData);
-
-        return CreateMap($assocArray);
+        $container = parent::Generate($processedData, $validate);
+        return CreateMap($container->items);
     }
 }

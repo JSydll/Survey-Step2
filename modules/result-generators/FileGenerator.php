@@ -21,12 +21,10 @@ class FileDescriptor extends DataObject
     }
 }
 
-class FileGenerator implements IResultGenerator
+class FileGenerator extends ScriptedGenerator
 {
     // Private members
-    private $schemaFile;
     private $contentPath;
-    private $scriptCallable;
     private $fileBasePath;
 
     /**
@@ -39,9 +37,8 @@ class FileGenerator implements IResultGenerator
      */
     public function __construct(string $schemaFile, string $contentPath, IScriptCallable &$scriptCallable, string $fileBasePath = '')
     {
-        $this->schemaFile = $schemaFile;
+        parent::__construct($schemaFile, $scriptCallable);
         $this->contentPath = $contentPath;
-        $this->scriptCallable = $scriptCallable;
         $this->fileBasePath = $fileBasePath;
     }
 
@@ -50,17 +47,10 @@ class FileGenerator implements IResultGenerator
      */
     public function Generate(array $processedData, bool $validate = true): DataObject
     {
-        if ($validate and !Validate($processedData, $this->schemaFile)) {
-            throw new HttpException(
-                "Schema validation of raw data using '" . $this->schema . "' failed!",
-                HttpStatusCode::INTERNAL_ERR
-            );
-        }
+        $container = parent::Generate($processedData, $validate);
+
         $merger = new PdfMerger($this->contentPath, $this->fileBasePath);
-
-        $sources = $this->scriptCallable->Run($processedData);
-
-        $filePath = $merger->MergeFiles($sources);
+        $filePath = $merger->MergeFiles($container->items);
 
         if (empty($filePath)) {
             throw new HttpException(
