@@ -34,3 +34,4 @@ require_once "modules/collectors/LimeSurveyCollector.php";
 require_once "modules/processors/ScriptedProcessor.php";
 require_once "modules/result-generators/FileGenerator.php";
 require_once "modules/result-generators/DataGenerator.php";
+require_once "modules/ForwardingScript.php";
