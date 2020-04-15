@@ -12,7 +12,7 @@ Step2\Logger::Configure("./", "Step2Api");
 // Global exception handler for all non-caught exceptions
 set_exception_handler("Step2\LogException");
 
-$collect = new Step2\LimeSurveyCollector("http://localhost/limesurvey/index.php?r=", "admin", "admin");
+$collect = new Step2\LimeSurveyCollector("http://localhost/limesurvey/index.php?r=admin/remotecontrol", "admin", "admin");
 
 $evalScript = new EvaluationScript();
 $proc = new Step2\ScriptedProcessor("$location/schema/raw.ini", $evalScript);
