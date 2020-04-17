@@ -96,7 +96,7 @@ class Mailer
                 HttpStatusCode::BAD_REQUEST
             );
         }
-        AddRecipients($recipients);
+        $this->AddRecipients($recipients);
 
         $this->mail->Subject = $subject;
         $this->mail->isHTML(true);
@@ -104,7 +104,7 @@ class Mailer
         $this->mail->AltBody = $nonHtmlBody;
 
         if (!empty($attachments)) {
-            AddAttachments($attachments);
+            $this->AddAttachments($attachments);
         }
 
         $this->mail->send();
@@ -122,7 +122,7 @@ class Mailer
 
     private function AddRecipients(array $recipients)
     {
-        $contact = new EmailContact();
+        $contact = new EmailContact('', '');
         foreach ($recipients as $recipient) {
             if ($recipient instanceof EmailContact) {
                 $contact = $recipient;
@@ -139,7 +139,7 @@ class Mailer
         }
     }
 
-    private function AddAttachments()
+    private function AddAttachments(array $attachments)
     {
         foreach ($attachments as $file) {
             if (!IsValidFile($file)) {
