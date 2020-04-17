@@ -48,6 +48,13 @@ class JsonRPCClient
     private $url;
 
     /**
+     * The server SSL certificate
+     * 
+     * @var string
+     */
+    private $serverCertPath;
+
+    /**
      * Proxy to be used
      *
      * @var string
@@ -83,9 +90,10 @@ class JsonRPCClient
      * @param boolean $debug
      * @param string $proxy
      */
-    public function __construct($url, $debug = false, $proxy = null)
+    public function __construct($url, $serverCertPath = '', $debug = false, $proxy = null)
     {
         $this->url = $url;
+        $this->serverCertPath = $serverCertPath;
         $this->proxy = $proxy;
         $this->debug = ($this->debug === true);
         // message id
@@ -148,6 +156,12 @@ class JsonRPCClient
         if ($this->enableCurl && is_callable('curl_init')) {
             // use curl when available; solves problems with allow_url_fopen
             $ch = curl_init($this->url);
+            // SSL Settings
+            if (count($this->serverCertPath) != 0) {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($ch, CURLOPT_CAINFO, $this->serverCertPath);
+            }
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Content-type: application/json'

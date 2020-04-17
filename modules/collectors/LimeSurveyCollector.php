@@ -29,10 +29,11 @@ class LimeSurveyCollector implements IDataCollector
      * @param host Url where the LimeSurvey Remote Control instance is hosted.
      * @param user User name used to connect to LimeSurvey's Remote Control API.
      * @param pass Password for the user.
+     * @param sslCert Certificate chain path of the server to be used.
      */
-    public function __construct(string $host, string $user, string $pass)
+    public function __construct(string $host, string $user, string $pass, string $sslCert = '')
     {
-        $this->rpcClient = new \org\jsonrpcphp\JsonRPCClient($host);
+        $this->rpcClient = new \org\jsonrpcphp\JsonRPCClient($host, $sslCert);
         $this->sessionKey = $this->rpcClient->get_session_key($user, $pass);
         if (empty($this->sessionKey)) {
             throw new HttpException(
